@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 import random
 
+from blackjack import Blackjack
+
 class Agent(ABC):
     def __init__(self):
         pass
@@ -11,5 +13,5 @@ class Agent(ABC):
 
 class RandomAgent(Agent):
 
-    def get_action(self, curr_state, actions):
-        return random.choice(actions)
+    def get_action(self, curr_state, problem: Blackjack):
+        return random.choice(problem.actions)

@@ -1,6 +1,5 @@
 from enum import Enum
 import random
-from agent import Agent
 
 class Blackjack:
 
@@ -98,41 +97,4 @@ class Blackjack:
         else:
             return self.GameState.WIN
 
-    def play_round(self, agent: Agent):
-        actions = []
-        self.shuffle()
-        
-        while True:
-            curr_game_actions = []
-            result = self.start_game()
-            if result is self.GameState.OUT_OF_CARDS:
-                    return actions
-            game_over = False
-            curr_game_actions.append(agent.get_action(self.get_state(), self.actions))
-            while curr_game_actions[-1]  == self.Action.HIT:
-                result = self.hit()
-                if result is self.GameState.LOSS:
-                    self.losses += 1
-                    self.game_over = True
-                    actions += curr_game_actions
-                if result is self.GameState.OUT_OF_CARDS:
-                    return actions
-                curr_game_actions.append(agent.get_action(self.get_state(), self.actions))
-            if game_over:
-                continue
-            result = self.stand()
-            if result is self.GameState.OUT_OF_CARDS:
-                    return actions
-            if result is self.GameState.LOSS:
-                    self.losses += 1
-                    actions += curr_game_actions
-            if result is self.GameState.WIN:
-                    self.wins += 1
-                    actions += curr_game_actions
-            if result is self.GameState.TIE:
-                    self.ties += 1
-                    actions += curr_game_actions
-
-
-                    
-
+    
