@@ -8,7 +8,7 @@ class Agent(ABC):
         pass
 
     @abstractmethod
-    def get_action(self, curr_state, actions):
+    def get_action(self, curr_state,  problem: Blackjack):
         pass
 
 class RandomAgent(Agent):
