@@ -19,15 +19,9 @@ class Blackjack:
         self.dealer_value_limit = dealer_value_limit
         self.deck = []
         self.played_cards = []
-        self.wins = 0
-        self.losses = 0
-        self.ties = 0
         self.actions = [self.Action.HIT, self.Action.STAND]
 
     def shuffle(self):
-        self.wins = 0
-        self.losses = 0
-        self.ties = 0
         self.deck.clear()
         self.played_cards.clear()
         for _ in range(self.num_decks):
