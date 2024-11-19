@@ -6,7 +6,6 @@ import pandas as pd
 
 def round_compare_visualization(bj : Blackjack, states, actions, compare_agent : Agent):
     df = pd.DataFrame(columns=["Player Cards", "Known Dealer Cards", "Agent 1 Action", "Agent 2 Action"])
-    end_indexes.insert(0, 0)
     alternative_actions = []
     for i, state in enumerate(states):
         alternative_actions.append(compare_agent.get_action(state, bj))
