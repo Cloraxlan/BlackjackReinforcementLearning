@@ -1,8 +1,10 @@
+from matplotlib import pyplot as plt
+import numpy as np
 from agent import Agent
 from blackjack import Blackjack
 import pandas as pd
 
-def round_compare_visualization(bj : Blackjack, states, actions, end_indexes, compare_agent : Agent):
+def round_compare_visualization(bj : Blackjack, states, actions, compare_agent : Agent):
     df = pd.DataFrame(columns=["Player Cards", "Known Dealer Cards", "Agent 1 Action", "Agent 2 Action"])
     end_indexes.insert(0, 0)
     alternative_actions = []
@@ -12,4 +14,18 @@ def round_compare_visualization(bj : Blackjack, states, actions, end_indexes, co
     df.to_html("./test.html")
 
 
+def plot_wins(results, agent_name):
+    y_hist = [0]
+    y = 0
+    X = np.arange(0,len(results)+1,1)
+    for result in results:
+        if result == Blackjack.GameState.WIN:
+            y += 1
+        y_hist.append(y)
+
+    plt.plot(X,y_hist)
+    plt.title(f"Total wins using {agent_name}")
+    plt.xlabel("Games Played")
+    plt.ylabel("Total wins")
+    plt.savefig(f'wins_{agent_name}.png') 
 
