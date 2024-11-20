@@ -64,6 +64,7 @@ def play_multiple_rounds(n, agent):
 
 
 
-#states, actions, _, results = play_round(bj, RandomAgent())
+#states, actions, _, results = play_round(bj, CardCountingAgent())
 #round_compare_visualization(bj, states, actions, RandomAgent())
 plot_wins(("Random Agent", "Card counting Agent"), (play_multiple_rounds(20, RandomAgent()), play_multiple_rounds(20, CardCountingAgent())))
+#round_compare_visualization(bj, states, actions, RandomAgent(), "Card Counting Agent", "Random Agent")

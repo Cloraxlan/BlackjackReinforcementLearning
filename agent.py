@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 import random
 import math
-
 from blackjack import Blackjack
 
 class Agent(ABC):
