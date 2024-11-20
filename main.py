@@ -64,12 +64,16 @@ def play_multiple_rounds(n):
         all_result += results
     return all_result
 
-
+def play_multiple_rounds_cc(n):
+    all_result = []
+    for i in range(n):
+        _, _, _, results = play_round(bj, CardCountingAgent())
+        all_result += results
+    return all_result
 
 #states, actions, _, results = play_round(bj, RandomAgent())
 #round_compare_visualization(bj, states, actions, RandomAgent())
 plot_wins(play_multiple_rounds(20), "Random Agent")
-plot_wins(play_multiple_rounds(20), "Card counting Agent")
-plot_legend(["Random", "Card Counting"])
+plot_wins(play_multiple_rounds_cc(20), "Card counting Agent")
 
 print(play_round(bj, CardCountingAgent()))
