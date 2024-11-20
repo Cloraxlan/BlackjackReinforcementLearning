@@ -1,4 +1,4 @@
-from agent import RandomAgent
+from agent import RandomAgent, CardCountingAgent
 from blackjack import Blackjack
 
 bj = Blackjack()
@@ -45,4 +45,4 @@ def play_round(bj, agent):
 
 
 
-print(play_round(bj, RandomAgent()))
+print(play_round(bj, CardCountingAgent()))
