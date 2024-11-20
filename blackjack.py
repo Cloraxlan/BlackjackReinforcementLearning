@@ -38,7 +38,7 @@ class Blackjack:
         return len(self.deck) > 0
     
     def get_state(self):
-         return [self.played_cards, self.player_cards, self.dealer_cards]
+         return [self.played_cards.copy(), self.player_cards.copy(), self.dealer_cards.copy()]
         
     def val(self, deck):
         deck_val = sum(deck)
