@@ -1,5 +1,3 @@
-from neurom.view.matplotlib_utils import plot_legend
-
 from agent import RandomAgent, CardCountingAgent
 from blackjack import Blackjack
 from visualizations import plot_wins, round_compare_visualization
@@ -57,10 +55,10 @@ def play_round(bj, agent):
                 states += curr_game_states
                 results.append(result)
 
-def play_multiple_rounds(n):
+def play_multiple_rounds(n, agent):
     all_result = []
     for i in range(n):
-        _, _, _, results = play_round(bj, RandomAgent())
+        _, _, _, results = play_round(bj, agent)
         all_result += results
     return all_result
 
@@ -68,8 +66,4 @@ def play_multiple_rounds(n):
 
 #states, actions, _, results = play_round(bj, RandomAgent())
 #round_compare_visualization(bj, states, actions, RandomAgent())
-plot_wins(play_multiple_rounds(20), "Random Agent")
-plot_wins(play_multiple_rounds(20), "Card counting Agent")
-plot_legend(["Random", "Card Counting"])
-
-print(play_round(bj, CardCountingAgent()))
+plot_wins(("Random Agent", "Card counting Agent"), (play_multiple_rounds(20, RandomAgent()), play_multiple_rounds(20, CardCountingAgent())))
