@@ -25,8 +25,9 @@ class Blackjack:
         self.deck.clear()
         self.played_cards.clear()
         for _ in range(self.num_decks):
-            self.deck += range(1,11)
-            self.deck += (10,10,10)
+            for _ in range(4):
+                self.deck += range(1,11)
+                self.deck += (10,10,10)
         random.shuffle(self.deck)
 
     def next_card(self):
