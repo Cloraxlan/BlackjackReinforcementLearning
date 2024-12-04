@@ -39,8 +39,14 @@ class Blackjack:
         return len(self.deck) > 0
     
     def get_state(self):
-         return [self.played_cards.copy(), self.player_cards.copy(), self.dealer_cards.copy()]
-        
+         return [self.played_cards.copy(), self.player_cards.copy(), self.dealer_cards.copy(), self.deck.copy()]
+    
+    def set_state(self, state):
+        self.played_cards = state[0]
+        self.player_cards = state[1]
+        self.dealer_cards = state[2]
+        self.deck = state[3]
+
     def val(self, deck):
         deck_val = sum(deck)
         if 1 in deck:
@@ -92,5 +98,35 @@ class Blackjack:
         else:
             return self.GameState.WIN
 
+ 
+    def initial_state(self):
+        self.shuffle()
+        self.start_game()
+        return self.get_state()
 
+    def result(self, current_state, action):
+        self.set_state(current_state)
+        if action == self.Action.HIT:
+            res = self.hit()
+        else:
+            res = self.stand()
+        return self.get_state()
     
+    def reward(self, current_state, action):
+        self.set_state(current_state)
+        if action == self.Action.HIT:
+            res = self.hit()
+        else:
+            res = self.stand()
+        if res == self.GameState.IN_PROGRESS or res == self.GameState.TIE:
+            return 0
+        if res == self.GameState.LOSS:
+            return -1
+        if res == self.GameState.WIN:
+            return 10
+    def is_terminal(self, state, action):
+        if action == self.Action.STAND:
+            return True
+        elif self.val(state[1]) > 21:
+            return True
+        return False
