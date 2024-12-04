@@ -137,6 +137,7 @@ class QLearningAgent(Agent):
             for j in range(num_iterations):
                 if done:
                     break
+                
                 if random.random() <= self._epsilon:
                     action = self.random_action(problem)
                 else:

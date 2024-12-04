@@ -1,5 +1,7 @@
+import copy
 from enum import Enum
 import random
+
 
 class Blackjack:
 
@@ -105,25 +107,23 @@ class Blackjack:
         return self.get_state()
 
     def result(self, current_state, action):
-        self.set_state(current_state)
+        self.set_state(copy.deepcopy(current_state))
         if action == self.Action.HIT:
             res = self.hit()
         else:
             res = self.stand()
+        self.last_result = res
         return self.get_state()
     
     def reward(self, current_state, action):
-        self.set_state(current_state)
-        if action == self.Action.HIT:
-            res = self.hit()
-        else:
-            res = self.stand()
+        res = self.last_result
         if res == self.GameState.IN_PROGRESS or res == self.GameState.TIE:
             return 0
         if res == self.GameState.LOSS:
             return -1
         if res == self.GameState.WIN:
             return 10
+        
     def is_terminal(self, state, action):
         if action == self.Action.STAND:
             return True
