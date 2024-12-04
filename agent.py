@@ -104,15 +104,15 @@ class QLearningAgent(Agent):
     def table(self):
         return self._table
     
-    def get_state_key(self, state):
+    def get_state_key(self, state, problem):
         if self.use_dealer_hand:
-            return (tuple(state[1]),tuple(state[2]))
+            return (problem.val(state[1]),problem.val(state[2]))
         else:
-            return tuple(state[1])
+            return problem.val(state[1])
 
     def get_action(self, current_state, problem: Blackjack):
-        if (self.get_state_key(current_state)) not in self._table:
-            self._table[self.get_state_key(current_state)] = [0 for _ in range(self._actions_per_state)]
+        if (self.get_state_key(current_state, problem)) not in self._table:
+            self._table[self.get_state_key(current_state, problem)] = [0 for _ in range(self._actions_per_state)]
         actions = problem.actions
         max_q_val = float("-inf")
         max_action_index = -1
@@ -120,7 +120,7 @@ class QLearningAgent(Agent):
             if action is None:
                 continue
             action_index = problem.actions.index(action)
-            q_val = self._table[self.get_state_key(current_state)][action_index]
+            q_val = self._table[self.get_state_key(current_state, problem)][action_index]
             if q_val > max_q_val:
                 max_q_val = q_val
                 max_action_index = action_index
@@ -148,14 +148,14 @@ class QLearningAgent(Agent):
                 
                 if problem.is_terminal(new_state, action):
                     done = True
-                if (self.get_state_key(current_state)) not in self._table:
-                    self._table[self.get_state_key(current_state)] = [0 for _ in range(self._actions_per_state)]
-                curr_q = self._table[self.get_state_key(current_state)][problem.actions.index(action)]
-                if (self.get_state_key(new_state)) not in self._table:
-                    self._table[self.get_state_key(new_state)] = [0 for _ in range(self._actions_per_state)]
-                max_q = max(self._table[self.get_state_key(new_state)])
+                if (self.get_state_key(current_state, problem)) not in self._table:
+                    self._table[self.get_state_key(current_state, problem)] = [0 for _ in range(self._actions_per_state)]
+                curr_q = self._table[self.get_state_key(current_state, problem)][problem.actions.index(action)]
+                if (self.get_state_key(new_state, problem)) not in self._table:
+                    self._table[self.get_state_key(new_state, problem)] = [0 for _ in range(self._actions_per_state)]
+                max_q = max(self._table[self.get_state_key(new_state, problem)])
                 
                 new_q = (1-self._alpha)*curr_q+self._alpha*(reward + self._gamma * max_q)
                 
-                self._table[self.get_state_key(current_state)][problem.actions.index(action)] = new_q
+                self._table[self.get_state_key(current_state, problem)][problem.actions.index(action)] = new_q
                 current_state = new_state

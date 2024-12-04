@@ -130,3 +130,4 @@ class Blackjack:
         elif self.val(state[1]) > 21:
             return True
         return False
+    
