@@ -87,3 +87,63 @@ class BasicStrategyAgent(Agent):
             return problem.Action.HIT
         else:
             return problem.Action.STAND
+
+class QLearningAgent(Agent):
+    def __init__(self, epsilon: float, alpha: float, gamma: float):
+        super().__init__()
+        self._table = {}
+        self._actions_per_state = 2
+        self._epsilon = epsilon
+        self._alpha = alpha
+        self._gamma = gamma
+
+    def table(self):
+        return self._table
+
+    def get_action(self, curr_state, problem: Blackjack):
+        player_cards = tuple(curr_state[1])
+        dealer_cards = tuple(curr_state[2])
+        state_tuple = (player_cards, dealer_cards)
+        if state_tuple not in self._table:
+            self._table[state_tuple] = [0 for _ in range(2)]
+        action = self._table[state_tuple].index(max(self._table[state_tuple]))
+
+        if action == 0:
+            return problem.Action.HIT
+        else:
+            return problem.Action.STAND
+
+    def train(self, initial_state, problem: Blackjack, num_epochs: int = 100, num_iterations: int = 1000):
+        player_cards = tuple(initial_state[1])
+        dealer_cards = tuple(initial_state[2])
+        state_tuple = (player_cards, dealer_cards)
+        for i in range(num_epochs):
+            current = state_tuple
+            for j in range(num_iterations):
+                value = random.random()
+                action = None
+                if value < self._epsilon:
+                    action = random.choice(problem.actions)
+                else:
+                    action = self.get_action(current, problem)
+                goal_state = None
+                new_state = None
+                if action == problem.Action.HIT:
+                    new_state = problem.hit()
+                    goal_state = problem.get_state()
+                else:
+                    new_state = problem.stand()
+                    goal_state = problem.get_state()
+                reward = None
+                if new_state is problem.GameState.WIN:
+                    reward = 10
+                else:
+                    reward = -1
+                current_q = self._table[state_tuple][problem.actions.index(action)]
+                max_action = self.get_action(new_state, problem)
+                max_possible_q = self._table[(new_state[1], new_state[2])][problem.actions.index(action)]
+                new_q = ((1 - self._alpha) * current_q) + self._alpha * (reward + (self._gamma * max_possible_q))
+                self._table[state_tuple][problem.actions.index(action)] = new_q
+                current = new_state
+                if problem.GameState.WIN:
+                    break

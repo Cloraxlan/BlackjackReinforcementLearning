@@ -44,7 +44,7 @@ class Blackjack:
     def val(self, deck):
         deck_val = sum(deck)
         if 1 in deck:
-            if deck_val + 10 <= 21:
+            if deck_val + 10    <= 21:
                 deck_val += 10
         return deck_val
 
@@ -91,5 +91,6 @@ class Blackjack:
             return self.GameState.LOSS
         else:
             return self.GameState.WIN
+
 
     
