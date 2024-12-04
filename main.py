@@ -4,6 +4,7 @@ from visualizations import plot_wins, round_compare_visualization
 
 bj = Blackjack()
 
+
 def play_round(bj, agent):
         actions = []
         states = []
@@ -63,9 +64,12 @@ def play_multiple_rounds(n, agent):
     return all_result
 
 
-qla = QLearningAgent(0.3, 0.1, 0.6, True)
-qla.train(bj.initial_state, bj, 100000)
-#states, actions, _, results = play_round(bj, CardCountingAgent())
-#round_compare_visualization(bj, states, actions, RandomAgent())
-plot_wins(("Qlern Agent", "Random Agent", "Card counting Agent"), (play_multiple_rounds(50, qla), play_multiple_rounds(50, RandomAgent()),play_multiple_rounds(50, CardCountingAgent())))
-#round_compare_visualization(bj, states, actions, RandomAgent(), "Card Counting Agent", "Random Agent")
+if __name__ == "__main__":
+    qla = QLearningAgent(0.6274980173208113, 0.6927138577280906, 0.7865680040692036, False)
+    qla.train(bj.initial_state, bj, 10000)
+    qla2 = QLearningAgent(0.6274980173208113, 0.6927138577280906, 0.7865680040692036, True)
+    qla2.train(bj.initial_state, bj, 100000)
+    #states, actions, _, results = play_round(bj, CardCountingAgent())
+    #round_compare_visualization(bj, states, actions, RandomAgent())
+    plot_wins(("Qlern Agent", "Qlern Agent with Dealer", "Random Agent", "Card counting Agent"), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2), play_multiple_rounds(50, RandomAgent()),play_multiple_rounds(50, CardCountingAgent())))
+    #round_compare_visualization(bj, states, actions, RandomAgent(), "Card Counting Agent", "Random Agent")
