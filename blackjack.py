@@ -112,18 +112,20 @@ class Blackjack:
             res = self.hit()
         else:
             res = self.stand()
-        self.last_result = res
         return self.get_state()
     
     def reward(self, current_state, action):
-        res = self.last_result
+        self.set_state(copy.deepcopy(current_state))
+        if action == self.Action.HIT:
+            res = self.hit()
+        else:
+            res = self.stand()
         if res == self.GameState.IN_PROGRESS or res == self.GameState.TIE:
             return 0
         if res == self.GameState.LOSS:
             return -1
         if res == self.GameState.WIN:
             return 10
-        
     def is_terminal(self, state, action):
         if action == self.Action.STAND:
             return True

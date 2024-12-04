@@ -67,9 +67,11 @@ def play_multiple_rounds(n, agent):
 if __name__ == "__main__":
     qla = QLearningAgent(0.1, 0.1, 0.6, False)
     qla.train(bj.initial_state, bj, 100000)
-    qla2 = QLearningAgent(0.1, 0.1, 0.6, True)
+    qla2 = QLearningAgent(0.4, 0.4, 0.5, True)
     qla2.train(bj.initial_state, bj, 100000)
-    #states, actions, _, results = play_round(bj, CardCountingAgent())
-    #round_compare_visualization(bj, states, actions, RandomAgent())
-    plot_wins(("QLearning Agent(Player Hand Only)", "QLearning Agent(All Known Cards)", "Random Agent", "Card Counting Agent"), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2), play_multiple_rounds(50, RandomAgent()),play_multiple_rounds(50, CardCountingAgent())))
+    states, actions, _, results = play_round(bj, CardCountingAgent())
+    round_compare_visualization(bj, states, actions, qla, "Card Counting Agent", "QLearn Player Hand Agent")
+    round_compare_visualization(bj, states, actions, qla2(), "Card Counting Agent", "QLearn All Hand Agent")
+    
+    #plot_wins(("QLearning Agent(Player Hand Only)", "QLearning Agent(All Known Cards)", "Random Agent", "Card Counting Agent"), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2), play_multiple_rounds(50, RandomAgent()),play_multiple_rounds(50, CardCountingAgent())))
     #round_compare_visualization(bj, states, actions, RandomAgent(), "Card Counting Agent", "Random Agent")

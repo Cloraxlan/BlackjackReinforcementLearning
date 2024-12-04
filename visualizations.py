@@ -10,7 +10,7 @@ def round_compare_visualization(bj : Blackjack, states, actions, compare_agent :
     for i, state in enumerate(states):
         alternative_actions.append(compare_agent.get_action(state, bj))
         df.loc[len(df)] = [state[1], state[2], actions[i],alternative_actions[i] ]
-    df.to_html("./test.html")
+    df.to_html(f"./{main_agent_name}_compared_to_{compare_agent_name}.html")
 
 
 def plot_wins(agents_names_arr , results_arr):
