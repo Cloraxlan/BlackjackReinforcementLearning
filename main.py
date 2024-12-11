@@ -1,4 +1,6 @@
 from time import sleep
+
+import agent
 from agent import QLearningAgent, RandomAgent, CardCountingAgent, BasicStrategyAgent
 from blackjack import Blackjack
 from visualizations import plot_wins, round_compare_visualization
@@ -141,6 +143,10 @@ if __name__ == "__main__":
     states, actions, _, results = play_round(bj, CardCountingAgent())
     round_compare_visualization(bj, states, actions, qla, "Card Counting Agent", "QLearn Player Hand Agent")
     round_compare_visualization(bj, states, actions, qla2, "Card Counting Agent", "QLearn All Hand Agent")
+
+
+    qla2.export_table("test.pkl")
+    qla2.print_table("test.pkl")
     
     #plot_wins(("QLearning Agent(Player Hand Only)", "QLearning Agent(All Known Cards)", "Random Agent", "Card Counting Agent"), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2), play_multiple_rounds(50, RandomAgent()),play_multiple_rounds(50, CardCountingAgent())))
     #round_compare_visualization(bj, states, actions, RandomAgent(), "Card Counting Agent", "Random Agent")

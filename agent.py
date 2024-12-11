@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import random
 import math
 from blackjack import Blackjack
+import pickle
 
 class Agent(ABC):
     def __init__(self):
@@ -91,6 +92,8 @@ class BasicStrategyAgent(Agent):
         else:
             return problem.Action.STAND
 
+
+
 class QLearningAgent(Agent):
     def __init__(self, epsilon: float, alpha: float, gamma: float, use_dealer_hand):
         super().__init__()
@@ -160,3 +163,27 @@ class QLearningAgent(Agent):
                 
                 self._table[self.get_state_key(current_state, problem)][problem.actions.index(action)] = new_q
                 current_state = new_state
+
+    def export_table(self, file_name):
+        with open(file_name, 'wb') as f:
+            pickle.dump(self.table(), f)
+
+    def print_table(self, file_name):
+        with open(file_name, 'rb') as f:
+            data_loaded = sorted(pickle.load(f))
+        min = data_loaded[0][0]
+        max = data_loaded[-1][0]
+        print("   " + str(list(range(data_loaded[0][1], 22))))
+        for i in range(min, max + 1):
+            string_o = str(i) + "  "
+            if i < 10:
+                string_o += " "
+            for item in data_loaded:
+                if item[0] == i:
+                    if self._table[item][0] > self._table[item][1]:
+                        string_o += "H  "
+                    else:
+                        string_o += "S  "
+                    if item[1] > 9:
+                        string_o += " "
+            print(string_o)
