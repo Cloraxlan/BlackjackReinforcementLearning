@@ -1,7 +1,7 @@
 from time import sleep
 from agent import QLearningAgent, RandomAgent, CardCountingAgent, BasicStrategyAgent
 from blackjack import Blackjack
-from visualizations import plot_wins, round_compare_visualization
+from visualizations import bar_plot_wins, epoch_bar_comparison, plot_wins, round_compare_visualization
 
 bj = Blackjack()
 
@@ -134,13 +134,19 @@ def play_round_demo(bj, agent):
 
 
 if __name__ == "__main__":
-    qla = QLearningAgent(0.1, 0.1, 0.6, False)
+    #qla = QLearningAgent(0.1, 0.1, 0.6, False)
+    #qla.train(bj.initial_state, bj, 10000)
+    #qla2 = QLearningAgent(0.4, 0.4, 0.5, True)
+    #qla2.train(bj.initial_state, bj, 10000)
+    #states, actions, _, results = play_round(bj, CardCountingAgent())
+    #round_compare_visualization(bj, states, actions, qla, "Card Counting Agent", "QLearn Player Hand Agent")
+    #round_compare_visualization(bj, states, actions, qla2, "Card Counting Agent", "QLearn All Hand Agent")
+    qla = QLearningAgent(0.4, 0.4, 0.5, False)
     qla.train(bj.initial_state, bj, 100000)
     qla2 = QLearningAgent(0.4, 0.4, 0.5, True)
     qla2.train(bj.initial_state, bj, 100000)
-    states, actions, _, results = play_round(bj, CardCountingAgent())
-    round_compare_visualization(bj, states, actions, qla, "Card Counting Agent", "QLearn Player Hand Agent")
-    round_compare_visualization(bj, states, actions, qla2, "Card Counting Agent", "QLearn All Hand Agent")
     
-    #plot_wins(("QLearning Agent(Player Hand Only)", "QLearning Agent(All Known Cards)", "Random Agent", "Card Counting Agent"), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2), play_multiple_rounds(50, RandomAgent()),play_multiple_rounds(50, CardCountingAgent())))
+    #plot_wins(("QLearning Agent(Player Hand Only)", "QLearning Agent(All Known Cards)"), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2)))
+    bar_plot_wins(50, ("QLearning Agent(Player Hand Only)\n100000 Epochs", "QLearning Agent(All Known Cards)\n100000 Epochs", "Random Agent", "Card Counting Agent"), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2), play_multiple_rounds(50, RandomAgent()),play_multiple_rounds(50, CardCountingAgent())))
+    #epoch_bar_comparison(50, (10,100,1000,10000), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2), play_multiple_rounds(50, qla3), play_multiple_rounds(50, qla4)))
     #round_compare_visualization(bj, states, actions, RandomAgent(), "Card Counting Agent", "Random Agent")
