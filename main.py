@@ -74,7 +74,7 @@ def play_round_demo(bj, agent):
         results = []
         while True:
             print("\n\n")
-            sleep(3)
+            #sleep(3)
             curr_game_actions = []
             curr_game_states = []
             result = bj.start_game()
@@ -145,13 +145,6 @@ if __name__ == "__main__":
     qla.train(bj.initial_state, bj, 100000)
     qla2 = QLearningAgent(0.4, 0.4, 0.5, True)
     qla2.train(bj.initial_state, bj, 100000)
-    states, actions, _, results = play_round(bj, CardCountingAgent())
-    round_compare_visualization(bj, states, actions, qla, "Card Counting Agent", "QLearn Player Hand Agent")
-    round_compare_visualization(bj, states, actions, qla2, "Card Counting Agent", "QLearn All Hand Agent")
-
-
-    qla2.export_table("test.pkl")
-    qla2.print_table("test.pkl")
     
     #plot_wins(("QLearning Agent(Player Hand Only)", "QLearning Agent(All Known Cards)"), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2)))
     bar_plot_wins(50, ("QLearning Agent(Player Hand Only)\n100000 Epochs", "QLearning Agent(All Known Cards)\n100000 Epochs", "Random Agent", "Card Counting Agent"), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2), play_multiple_rounds(50, RandomAgent()),play_multiple_rounds(50, CardCountingAgent())))

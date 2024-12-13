@@ -167,6 +167,10 @@ class QLearningAgent(Agent):
     def export_table(self, file_name):
         with open(file_name, 'wb') as f:
             pickle.dump(self.table(), f)
+            
+    def load_table(self, file_name):
+        with open(file_name, 'rb') as f:
+            self.table = pickle.load(f)
 
     def print_table(self, file_name):
         with open(file_name, 'rb') as f:
