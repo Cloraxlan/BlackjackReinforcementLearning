@@ -5,6 +5,15 @@ from blackjack import Blackjack
 import pandas as pd
 
 def round_compare_visualization(bj : Blackjack, states, actions, compare_agent : Agent, main_agent_name, compare_agent_name):
+    """
+    Method used to compare the action taken by each agent and visualize it
+    :param bj: The problem (Blackjack) agent
+    :param states: States given to each agent
+    :param actions: Actions taken by the main agent
+    :param compare_agent: Agent compared to the main agent
+    :param main_agent_name: The main agent
+    :param compare_agent_name: Name of the comparison agent
+    """
     df = pd.DataFrame(columns=["Player Cards", "Known Dealer Cards", f"{main_agent_name} Action", f"{compare_agent_name} Action"])
     alternative_actions = []
     for i, state in enumerate(states):
@@ -15,6 +24,11 @@ def round_compare_visualization(bj : Blackjack, states, actions, compare_agent :
 
 
 def plot_wins(agents_names_arr , results_arr):
+    """
+    Method used to plot the number of wins in a line graph
+    :param agents_names_arr: Names of the agents used
+    :param results_arr: List that contains the results
+    """
     for results in results_arr:
         y_hist = [0]
         y = 0
@@ -31,6 +45,12 @@ def plot_wins(agents_names_arr , results_arr):
     plt.savefig(f'wins.png') 
 
 def bar_plot_wins(num_shuffle, agents_names_arr , results_arr):
+    """
+    Method used to plot the bar graph to compare number of wins per agent
+    :param num_shuffle: Number of shuffles
+    :param agents_names_arr: Names of the agents used
+    :param results_arr: List that contains the results
+    """
     plt.figure(figsize=(15, 5))
     for name, result in zip(agents_names_arr, results_arr):
         wins = result.count(Blackjack.GameState.WIN)
@@ -40,6 +60,12 @@ def bar_plot_wins(num_shuffle, agents_names_arr , results_arr):
     plt.savefig(f'wins.png') 
 
 def epoch_bar_comparison(num_shuffle, epochs, results_arr):
+    """
+    Method used to plot the bar graph to compare performances of various epoch counts.
+    :param num_shuffle: Number of shuffles
+    :param epochs: Number of epochs
+    :param results_arr: List that contains the results
+    """
     plt.figure(figsize=(15, 5))
     for epoch_count, result in zip(epochs, results_arr):
         wins = result.count(Blackjack.GameState.WIN)
