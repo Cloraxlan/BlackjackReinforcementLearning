@@ -12,7 +12,7 @@ class Agent(ABC):
         pass
 
     @abstractmethod
-    def get_action(self, curr_state,  problem: Blackjack) -> Blackjack.Action:
+    def get_action(self, curr_state : list[list[int]],  problem: Blackjack) -> Blackjack.Action:
         """
         Return an action given the current state and the problem.
 
@@ -35,7 +35,7 @@ class RandomAgent(Agent):
     """
     Blackjack player agent that randomly chooses an action for a given state.
     """
-    def get_action(self, curr_state, problem: Blackjack) -> Blackjack.Action:
+    def get_action(self, curr_state : list[list[int]], problem: Blackjack) -> Blackjack.Action:
         """
         Return an action given the current state and the problem.
 
@@ -88,7 +88,7 @@ class CardCountingAgent(Agent):
         super().__init__()
 
 
-    def get_action(self, curr_state, problem: Blackjack) -> Blackjack.Action:
+    def get_action(self, curr_state : list[list[int]], problem: Blackjack) -> Blackjack.Action:
         """
         Return an action given the current state and the problem.
         :param curr_state: List containing a list of all the played cards,
@@ -126,7 +126,7 @@ class QLearningAgent(Agent):
     QLearning agent that uses the player hand and dealer's hand (if specified)
      as the state to find the action
     """
-    def __init__(self, epsilon: float, alpha: float, gamma: float, use_dealer_hand):
+    def __init__(self, epsilon: float, alpha: float, gamma: float, use_dealer_hand : bool):
         super().__init__()
         self._table = {}
         self._actions_per_state = 2
@@ -142,7 +142,7 @@ class QLearningAgent(Agent):
         """
         return self._table
     
-    def get_state_key(self, state, problem) -> list[int]:
+    def get_state_key(self, state: list[list[int]], problem : Blackjack) -> list[int]:
         """
         Method used to get the state key for the needed q-table state variation
         :param state: List containing a list of all the played cards,
@@ -155,7 +155,7 @@ class QLearningAgent(Agent):
         else:
             return problem.val(state[1])
 
-    def get_action(self, current_state, problem: Blackjack) -> Blackjack.Action:
+    def get_action(self, current_state : list[list[int]], problem: Blackjack) -> Blackjack.Action:
         """
         Return an action given the current state and the problem.
         :param current_state: List containing a list of all the played cards,
@@ -182,16 +182,15 @@ class QLearningAgent(Agent):
                     max_action_index = action_index
         return problem.actions[max_action_index]
 
-    def train(self, inital_state, problem: Blackjack, num_epochs: int = 100, num_iterations: int = 1000):
+    def train(self, problem: Blackjack, num_epochs: int = 100, num_iterations: int = 1000):
         """
         Method used to train the QLearning agent's table
-        :param inital_state: Function to get initial state of problem
         :param problem: Class that represents the problem with various operators.
         :param num_epochs: Number of epochs to train the agent
         :param num_iterations: Number of iterations per epoch to train the agent
         """
         for i in range(num_epochs):
-            current_state = inital_state()
+            current_state = problem.initial_state()
             done = False
             for j in range(num_iterations):
                 if done:
@@ -220,7 +219,7 @@ class QLearningAgent(Agent):
                 self._table[self.get_state_key(current_state, problem)][problem.actions.index(action)] = new_q
                 current_state = new_state
 
-    def export_table(self, file_name):
+    def export_table(self, file_name : str):
         """
         Method used to export table as a pkl file to be used for later
         :param file_name: File name to store the q-table in.
@@ -236,7 +235,7 @@ class QLearningAgent(Agent):
         with open(file_name, 'rb') as f:
             self.table = pickle.load(f)
 
-    def print_table(self, file_name):
+    def print_table(self, file_name : str):
         """
         Method used to print the q-table.
         :param file_name: Name of the pkl file that has the q-table.

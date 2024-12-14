@@ -1,11 +1,11 @@
 from time import sleep
-from agent import QLearningAgent, RandomAgent, CardCountingAgent
+from agent import QLearningAgent, RandomAgent, CardCountingAgent, Agent
 from blackjack import Blackjack
 from visualizations import bar_plot_wins, epoch_bar_comparison, plot_wins, round_compare_visualization
 
 
 
-def play_round(bj, agent) -> tuple[list[list[int]], list[Blackjack.Action], tuple[int], list[Blackjack.GameState]]:
+def play_round(bj : Blackjack, agent: Agent) -> tuple[list[list[int]], list[Blackjack.Action], tuple[int], list[Blackjack.GameState]]:
     """
     Method used to play a round (play until a shuffle is needed).
     :param bj: The problem (blackjack) object
@@ -61,7 +61,7 @@ def play_round(bj, agent) -> tuple[list[list[int]], list[Blackjack.Action], tupl
             states += curr_game_states
             results.append(result)
 
-def play_multiple_rounds(n, agent) -> list[Blackjack.GameState]:
+def play_multiple_rounds(n : int, bj : Blackjack, agent : Agent) -> list[Blackjack.GameState]:
     """
     Method used to play multiple rounds of shuffles
     :param n: Number of shuffles
@@ -74,7 +74,7 @@ def play_multiple_rounds(n, agent) -> list[Blackjack.GameState]:
         all_result += results
     return all_result
 
-def play_round_demo(bj, agent) -> tuple[list[list[int]], list[Blackjack.Action], tuple[int], list[Blackjack.GameState]]:
+def play_round_demo(bj : Blackjack, agent : Agent) -> tuple[list[list[int]], list[Blackjack.Action], tuple[int], list[Blackjack.GameState]]:
     """
     Method used to play a demo round.
     :param bj: The problem (blackjack) object
@@ -162,10 +162,10 @@ if __name__ == "__main__":
         agent = CardCountingAgent()
     elif agent_type == 3:
         agent = QLearningAgent(0.1, 0.1, 0.6, False)
-        agent.train(bj.initial_state, bj, 10000)
+        agent.train(bj, 10000)
     elif agent_type == 4:
         agent = QLearningAgent(0.4, 0.4, 0.5, True)
-        agent.train(bj.initial_state, bj, 10000)
+        agent.train(bj, 10000)
     else:
         exit()
     

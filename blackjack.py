@@ -18,7 +18,7 @@ class Blackjack:
         HIT = 1
         STAND = 2
 
-    def __init__(self, num_decks=4, dealer_value_limit=17):
+    def __init__(self, num_decks : int = 4, dealer_value_limit  : int =17):
         self.num_decks = num_decks
         self.dealer_value_limit = dealer_value_limit
         self.deck = []
@@ -60,7 +60,7 @@ class Blackjack:
         """
         return [self.played_cards.copy(), self.player_cards.copy(), self.dealer_cards.copy(), self.deck.copy()]
     
-    def set_state(self, state):
+    def set_state(self, state : list[list[int]]):
         """
         Method used to set current state of the game
         :param state: Current state of the game
@@ -70,7 +70,7 @@ class Blackjack:
         self.dealer_cards = state[2]
         self.deck = state[3]
 
-    def val(self, deck) -> int:
+    def val(self, deck : list[int]) -> int:
         """
         Method used to calculate value of given hand
         :param deck: The hand to evaluate the value of.
@@ -148,7 +148,7 @@ class Blackjack:
         self.start_game()
         return self.get_state()
 
-    def result(self, current_state, action) -> list[list[int]]:
+    def result(self, current_state : list[list[int]], action : Action) -> list[list[int]]:
         """
         Method used to get the result of the given action.
         :param current_state: Current state of the game
@@ -162,7 +162,7 @@ class Blackjack:
             res = self.stand()
         return self.get_state()
     
-    def reward(self, current_state, action) -> int:
+    def reward(self, current_state : list[list[int]], action : Action) -> int:
         """
         Reward for the given action's result.
         :param current_state: Current state of the game
@@ -181,7 +181,7 @@ class Blackjack:
         if res == self.GameState.WIN:
             return 10
 
-    def is_terminal(self, state, action) -> bool:
+    def is_terminal(self, state : list[list[int]], action : Action) -> bool:
         """
         Method used to determine if the given state is terminal
         :param state: Current state of the game
