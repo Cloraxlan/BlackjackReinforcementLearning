@@ -1,3 +1,11 @@
+"""
+- Class: CSC 4631
+- Section: 111
+- Names: Konrad Rozpadek, Kalki Sarangan
+
+File implementing the class to simulate a game of blackjack.
+"""
+
 import copy
 from enum import Enum
 import random

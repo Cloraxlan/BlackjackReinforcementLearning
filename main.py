@@ -1,3 +1,11 @@
+"""
+- Class: CSC 4631
+- Section: 111
+- Names: Konrad Rozpadek, Kalki Sarangan
+
+File implementing methods to play 1 or more round(s) of blackjack, and play a demo round.
+"""
+
 from time import sleep
 from agent import QLearningAgent, RandomAgent, CardCountingAgent, Agent
 from blackjack import Blackjack

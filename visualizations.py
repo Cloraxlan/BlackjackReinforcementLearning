@@ -1,3 +1,11 @@
+"""
+- Class: CSC 4631
+- Section: 111
+- Names: Konrad Rozpadek, Kalki Sarangan
+
+File implementing methods for various plots to compare agents, or performance of the agents.
+"""
+
 from matplotlib import pyplot as plt
 import numpy as np
 from agent import Agent

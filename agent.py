@@ -1,3 +1,11 @@
+"""
+- Class: CSC 4631
+- Section: 111
+- Names: Konrad Rozpadek, Kalki Sarangan
+
+File implementing various agents including random, card counting, qlearning.
+"""
+
 from abc import ABC, abstractmethod
 import random
 import math
