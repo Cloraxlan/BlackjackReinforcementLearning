@@ -37,7 +37,7 @@ class Blackjack:
                 self.deck += (10,10,10)
         random.shuffle(self.deck)
 
-    def next_card(self):
+    def next_card(self) -> int:
         """
         Method used to get next card
         :return: Next card in the deck
@@ -46,14 +46,14 @@ class Blackjack:
         self.played_cards.append(new_card)
         return new_card
     
-    def has_next_card(self):
+    def has_next_card(self) -> bool:
         """
         Method used to check if there are any cards left in the deck
         :return: boolean that indicates if there are cards left.
         """
         return len(self.deck) > 0
     
-    def get_state(self):
+    def get_state(self) -> list[list[int]]:
         """
         Method used to get current state of the game
         :return: Current state of the game
@@ -70,7 +70,7 @@ class Blackjack:
         self.dealer_cards = state[2]
         self.deck = state[3]
 
-    def val(self, deck):
+    def val(self, deck) -> int:
         """
         Method used to calculate value of given hand
         :param deck: The hand to evaluate the value of.
@@ -82,7 +82,7 @@ class Blackjack:
                 deck_val += 10
         return deck_val
 
-    def start_game(self):
+    def start_game(self) -> GameState:
         """
         Method used to start the game and initialize the game state.
         :return: State of the game
@@ -100,7 +100,7 @@ class Blackjack:
 
         return self.GameState.IN_PROGRESS
     
-    def hit(self):
+    def hit(self) -> GameState:
         """
         Method used to perform a hit action in blackjack.
         :return: State of the game
@@ -115,7 +115,7 @@ class Blackjack:
         
         return self.GameState.IN_PROGRESS
     
-    def stand(self):
+    def stand(self) -> GameState:
         """
         Method used to perform a stand action in blackjack.
         :return: State of the game
@@ -139,7 +139,7 @@ class Blackjack:
             return self.GameState.WIN
 
  
-    def initial_state(self):
+    def initial_state(self) -> list[list[int]]:
         """
         Method used to initialize the game and get the state.
         :return:
@@ -148,7 +148,7 @@ class Blackjack:
         self.start_game()
         return self.get_state()
 
-    def result(self, current_state, action):
+    def result(self, current_state, action) -> list[list[int]]:
         """
         Method used to get the result of the given action.
         :param current_state: Current state of the game
@@ -162,7 +162,7 @@ class Blackjack:
             res = self.stand()
         return self.get_state()
     
-    def reward(self, current_state, action):
+    def reward(self, current_state, action) -> int:
         """
         Reward for the given action's result.
         :param current_state: Current state of the game
@@ -181,7 +181,7 @@ class Blackjack:
         if res == self.GameState.WIN:
             return 10
 
-    def is_terminal(self, state, action):
+    def is_terminal(self, state, action) -> bool:
         """
         Method used to determine if the given state is terminal
         :param state: Current state of the game

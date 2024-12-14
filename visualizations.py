@@ -6,7 +6,7 @@ import pandas as pd
 
 def round_compare_visualization(bj : Blackjack, states, actions, compare_agent : Agent, main_agent_name, compare_agent_name):
     """
-    Method used to compare the action taken by each agent and visualize it
+    Method used to compare the action taken by each agent against another over 1 shuffle round
     :param bj: The problem (Blackjack) agent
     :param states: States given to each agent
     :param actions: Actions taken by the main agent

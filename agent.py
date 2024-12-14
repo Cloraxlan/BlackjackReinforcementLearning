@@ -12,7 +12,7 @@ class Agent(ABC):
         pass
 
     @abstractmethod
-    def get_action(self, curr_state,  problem: Blackjack):
+    def get_action(self, curr_state,  problem: Blackjack) -> Blackjack.Action:
         """
         Return an action given the current state and the problem.
 
@@ -23,7 +23,7 @@ class Agent(ABC):
         """
         pass
 
-    def random_action(self, problem : Blackjack):
+    def random_action(self, problem : Blackjack) -> Blackjack.Action:
         """
         Returns a random action given the current state and the problem.
         :param problem: Class that represents the problem with various operators.
@@ -35,7 +35,7 @@ class RandomAgent(Agent):
     """
     Blackjack player agent that randomly chooses an action for a given state.
     """
-    def get_action(self, curr_state, problem: Blackjack):
+    def get_action(self, curr_state, problem: Blackjack) -> Blackjack.Action:
         """
         Return an action given the current state and the problem.
 
@@ -88,7 +88,7 @@ class CardCountingAgent(Agent):
         super().__init__()
 
 
-    def get_action(self, curr_state, problem: Blackjack):
+    def get_action(self, curr_state, problem: Blackjack) -> Blackjack.Action:
         """
         Return an action given the current state and the problem.
         :param curr_state: List containing a list of all the played cards,
@@ -135,16 +135,16 @@ class QLearningAgent(Agent):
         self._gamma = gamma
         self.use_dealer_hand = use_dealer_hand
 
-    def table(self):
+    def table(self) -> dict:
         """
         Returns the q-table
         :return: Trained q-table
         """
         return self._table
     
-    def get_state_key(self, state, problem):
+    def get_state_key(self, state, problem) -> list[int]:
         """
-        Method used to get the state key for the needed q-table
+        Method used to get the state key for the needed q-table state variation
         :param state: List containing a list of all the played cards,
         list of the player's hand and a list of the dealer's hand
         :param problem: Class that represents the problem with various operators.
@@ -155,7 +155,7 @@ class QLearningAgent(Agent):
         else:
             return problem.val(state[1])
 
-    def get_action(self, current_state, problem: Blackjack):
+    def get_action(self, current_state, problem: Blackjack) -> Blackjack.Action:
         """
         Return an action given the current state and the problem.
         :param current_state: List containing a list of all the played cards,
@@ -185,7 +185,7 @@ class QLearningAgent(Agent):
     def train(self, inital_state, problem: Blackjack, num_epochs: int = 100, num_iterations: int = 1000):
         """
         Method used to train the QLearning agent's table
-        :param inital_state: Initial state of problem
+        :param inital_state: Function to get initial state of problem
         :param problem: Class that represents the problem with various operators.
         :param num_epochs: Number of epochs to train the agent
         :param num_iterations: Number of iterations per epoch to train the agent
@@ -228,7 +228,7 @@ class QLearningAgent(Agent):
         with open(file_name, 'wb') as f:
             pickle.dump(self.table(), f)
             
-    def load_table(self, file_name):
+    def load_table(self, file_name : str):
         """
         Method used to load the q-table from a pkl file.
         :param file_name: File name of the stored q-table.

@@ -3,12 +3,11 @@ from agent import QLearningAgent, RandomAgent, CardCountingAgent
 from blackjack import Blackjack
 from visualizations import bar_plot_wins, epoch_bar_comparison, plot_wins, round_compare_visualization
 
-bj = Blackjack()
 
 
-def play_round(bj, agent):
+def play_round(bj, agent) -> tuple[list[list[int]], list[Blackjack.Action], tuple[int], list[Blackjack.GameState]]:
     """
-    Method used to play a round (per shuffle).
+    Method used to play a round (play until a shuffle is needed).
     :param bj: The problem (blackjack) object
     :param agent: Type of agent to use for the game.
     """
@@ -62,12 +61,12 @@ def play_round(bj, agent):
             states += curr_game_states
             results.append(result)
 
-def play_multiple_rounds(n, agent):
+def play_multiple_rounds(n, agent) -> list[Blackjack.GameState]:
     """
-    Method used to play multiple rounds
-    :param n: Number of rounds
+    Method used to play multiple rounds of shuffles
+    :param n: Number of shuffles
     :param agent: Agent to use for the game.
-    :return: Results of all the rounds
+    :return: Results of all the hands
     """
     all_result = []
     for i in range(n):
@@ -75,7 +74,7 @@ def play_multiple_rounds(n, agent):
         all_result += results
     return all_result
 
-def play_round_demo(bj, agent):
+def play_round_demo(bj, agent) -> tuple[list[list[int]], list[Blackjack.Action], tuple[int], list[Blackjack.GameState]]:
     """
     Method used to play a demo round.
     :param bj: The problem (blackjack) object
@@ -151,19 +150,23 @@ def play_round_demo(bj, agent):
 
 
 if __name__ == "__main__":
-    #qla = QLearningAgent(0.1, 0.1, 0.6, False)
-    #qla.train(bj.initial_state, bj, 10000)
-    #qla2 = QLearningAgent(0.4, 0.4, 0.5, True)
-    #qla2.train(bj.initial_state, bj, 10000)
-    #states, actions, _, results = play_round(bj, CardCountingAgent())
-    #round_compare_visualization(bj, states, actions, qla, "Card Counting Agent", "QLearn Player Hand Agent")
-    #round_compare_visualization(bj, states, actions, qla2, "Card Counting Agent", "QLearn All Hand Agent")
-    qla = QLearningAgent(0.4, 0.4, 0.5, False)
-    qla.train(bj.initial_state, bj, 100000)
-    qla2 = QLearningAgent(0.4, 0.4, 0.5, True)
-    qla2.train(bj.initial_state, bj, 100000)
+    """
+    Runs demo with a agent
+    """
+    bj = Blackjack()
+    agent_type = input("Select an Agent 1) Random\n 2) Card Counting\n 3) QLearning Player Hand State\n 4) QLearning All Hand State\n")
+    agent_type = int(agent_type)
+    if agent_type == 1:
+        agent = RandomAgent()
+    elif agent_type == 2:
+        agent = CardCountingAgent()
+    elif agent_type == 3:
+        agent = QLearningAgent(0.1, 0.1, 0.6, False)
+        agent.train(bj.initial_state, bj, 10000)
+    elif agent_type == 4:
+        agent = QLearningAgent(0.4, 0.4, 0.5, True)
+        agent.train(bj.initial_state, bj, 10000)
+    else:
+        exit()
     
-    #plot_wins(("QLearning Agent(Player Hand Only)", "QLearning Agent(All Known Cards)"), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2)))
-    bar_plot_wins(50, ("QLearning Agent(Player Hand Only)\n100000 Epochs", "QLearning Agent(All Known Cards)\n100000 Epochs", "Random Agent", "Card Counting Agent"), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2), play_multiple_rounds(50, RandomAgent()),play_multiple_rounds(50, CardCountingAgent())))
-    #epoch_bar_comparison(50, (10,100,1000,10000), (play_multiple_rounds(50, qla), play_multiple_rounds(50, qla2), play_multiple_rounds(50, qla3), play_multiple_rounds(50, qla4)))
-    #round_compare_visualization(bj, states, actions, RandomAgent(), "Card Counting Agent", "Random Agent")
+    play_round_demo(bj, agent)
