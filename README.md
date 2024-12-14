@@ -25,8 +25,8 @@ agent.py - File implementing various agents including random, card counting, qle
 blackjack.py - File implementing the class to simulate a game of blackjack.\
 main.py - File implementing methods to play 1 or more round(s) of blackjack, and play a demo round.\
 visualizations.py - File implementing methods for various plots to compare agents, or performance of the agents.\
-generate_visualizations.ipynb - Generates visualizations used in presentations using optimal hyperparameters\
-hyperparam_search.ipynb - Uses grid search with epoch count of 10000 to search for optimal hyperparams for both versions of the state\
+generate_visualizations.ipynb - Generates visualizations used in presentations using optimal hyperparameters.\
+hyperparam_search.ipynb - Uses grid search with epoch count of 10000 to search for optimal hyperparams for both versions of the state.
 
 # Description of each folder
 
@@ -38,11 +38,4 @@ Command to run the program:\
 -- python3 main.py
 
 # Location of the code outputs and how they're interpreted
-The results are located in the project's base directory. The bar plots show the comparison between agents, agent wins, performance with epoch sizes
-
-Result files:\
--- wins.png\
--- wins_all_agents.png\
--- wins_epochs.png\
--- wins_epochs_both.png\
--- wins_epochs_player.png
+The results are the bar plots that show the comparison between agents, agent wins, performance with epoch sizes located in generate_visualizations.ipynb
