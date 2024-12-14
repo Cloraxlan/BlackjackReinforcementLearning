@@ -40,9 +40,9 @@ Command to run the program:\
 # Location of the code outputs and how they're interpreted
 The results are located in the project's base directory. The bar plots show the comparison between agents, agent wins, performance with epoch sizes
 
-Result files:
--- wins.png
--- wins_all_agents.png
--- wins_epochs.png
--- wins_epochs_both.png
+Result files:\
+-- wins.png\
+-- wins_all_agents.png\
+-- wins_epochs.png\
+-- wins_epochs_both.png\
 -- wins_epochs_player.png
