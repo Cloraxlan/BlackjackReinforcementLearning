@@ -1,8 +1,6 @@
-Class: CSC 4631\
-Section: 111\
-Names: Konrad Rozpadek, Kalki Sarangan
-
 # Overview
+
+This repository contains a simulation of a Blackjack game featuring multiple agents, including a Random Agent, a Card Counting Agent, and a Reinforcement Learning Agent. The purpose of this project is to compare the effectiveness of these different strategies in playing Blackjack, providing insights into their performance and decision-making processes.
 
 Problem: Blackjack\
 Gameplay & Rules:\
